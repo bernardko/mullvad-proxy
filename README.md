@@ -2,11 +2,11 @@
 
 This docker compose setup runs the [Mullvad VPN app](https://mullvad.net/en/download/linux/) inside a docker container and exposes an HTTP proxy using privoxy (port 8118) and SOCKS5 proxy using nginx (port 1080). The Mullvad CLI can still be used to control the application.
 
-# Why
+## Why
 
 Mullvad VPN app works well and has easy to use CLI functionality for switching between their worldwide servers. However, when it is enabled, it will route all of your internet traffic through it and sometimes that is not ideal. If you want have VPN access for individual applications (e.g. Firefox but not Chrome) without routing all your internet traffic through it, then this setup will work with any applications that can use a HTTP or a SOCKS5 proxy server.
 
-# Requirements and Usage
+## Requirements and Usage
 
 This setup has been tested on Ubuntu Linux and should work with all Debian-based Linux OSes. You will need the following to use this repository:
 - git
