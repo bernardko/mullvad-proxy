@@ -1,0 +1,32 @@
+version: "3.3"
+services:
+  mullvad:
+    build: mullvad/.
+    image: "mullvad:latest"
+    container_name: mvpn
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      net.ipv4.conf.all.src_valid_mark: 1
+    restart: unless-stopped
+    privileged: true
+    ports:
+      - 8118:8118
+      - 1080:1080
+  privoxy:
+    image: "caligari/privoxy:latest"
+    container_name: mvpn-http
+    restart: unless-stopped
+    network_mode: service:mullvad
+    depends_on:
+      - mullvad
+  nginx:
+    build: nginx/.
+    image: mvpn-nginx
+    container_name: mvpn-socks5
+    restart: unless-stopped
+    network_mode: service:mullvad
+    depends_on:
+      - mullvad
+    
