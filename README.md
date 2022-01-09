@@ -21,7 +21,7 @@ Make sure ports 8118 and 1080 are available. If you need to bind the proxy serve
 Once the above is setup, run the following to get the proxy servers up and running:
 
 ```bash
-git clone https://github.com/bernardko/mullvad-proxy
+git clone https://github.com/bernardko/mullvad-proxy.git
 cd mullvad-proxy
 ./setup.sh <Mullvad Account Number>
 ```
