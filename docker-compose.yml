@@ -12,8 +12,8 @@ services:
     restart: unless-stopped
     privileged: true
     ports:
-      - 8118:8118
-      - 1080:1080
+      - ${HTTP_PORT:-8118}:8118
+      - ${SOCKS5_PORT:-1080}:1080
   privoxy:
     image: "caligari/privoxy:latest"
     container_name: mvpn-http

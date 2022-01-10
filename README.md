@@ -16,7 +16,12 @@ This setup has been tested on Ubuntu Linux and should work with all Debian-based
 
 Once you have an active account, go to the [Mullvad Manage ports and WireGuard keys page](https://mullvad.net/en/account/#/ports) and make sure you have at least 1 wireguard key available to allow the Mullvad VPN container to connect. Each account number has a total of 5 wireguard keys.
 
-Make sure ports 8118 and 1080 are available. If you need to bind the proxy server to different ports, then just edit the docker-compose.yml file and change the ports section.
+Make sure ports 8118 and 1080 are available. If you need to bind the proxy servers to different ports, you can create a `.env` in the same path as the docker-compose.yml file with the following to change the ports:
+
+```bash
+HTTP_PORT=8118
+SOCKS5_PORT=1080
+```
 
 Once the above is setup, run the following to get the proxy servers up and running:
 
