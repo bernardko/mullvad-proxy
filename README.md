@@ -10,7 +10,7 @@ Mullvad VPN app works well and has easy to use CLI functionality for switching b
 
 **HTTP and SOCKS5 proxy ports can now be accessed over IP address on your network.**
 
-Previously, the http and socks5 proxy only worked when applications using them were also on the host machine. This was great if you were just using it on your local system (which I was in my case), but if you wanted to host it on server and have your network access it, then it wouldn't work due to possibly the Mullvad app security filtering out IP addresses that was outside of the docker network IP range on your host machine.
+Previously, the http and socks5 proxy only worked when applications using them were also on the host machine. This was great if you were just using it on your local system (which I was in my case). However, if you wanted to host it on server and have your network access it, then it wouldn't work due to possibly the Mullvad app security filtering out IP addresses that was outside of the docker network IP range on your host machine.
 
 To get around this problem, we serve the ports over the network via an nginx reverse proxy just like how web applications are served. A new container has been added using the docker host network which proxies the exposed ports on the mullvad container. The mullvad container ports are now exposed as ports 61000-61001 to try to avoid collisions with other applications and nginx now will proxy these ports on SOCKS5 (port 1080) and HTTP (port 8118) making them accessible to the network. 
 
@@ -40,6 +40,15 @@ cd mullvad-proxy
 ```
 
 The setup.sh script runs `docker-compose up -d` to setup Mullvad VPN and proxy docker  containers with container networking and then runs several Mullvad VPN CLI commands to setup the app with the account number and connects to the VPN. The containers are configured to auto restart and will be available whenever your machine starts as long as docker is running.
+
+To teardown the containers, use the following:
+
+```bash
+./destroy.sh
+```
+
+This script first runs `mullvad account get` and `mullvad tunnel wireguard key check` to output the account and wireguard key that is used in the docker container. Finally it will run `docker-compose down` to teardown the container processes. This allows you to conveniently delete the unused key from the [Manage ports and WireGuard keys page](https://mullvad.net/en/account/#/ports) (without having to guess which key it is) so that it is not locked up.
+
 
 ## Use Mullvad CLI
 
