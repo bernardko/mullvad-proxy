@@ -6,6 +6,14 @@ This docker compose setup runs the [Mullvad VPN app](https://mullvad.net/en/down
 
 Mullvad VPN app works well and has easy to use CLI functionality for switching between their worldwide servers. However, when it is enabled, it will route all of your internet traffic through it and sometimes that is not ideal. If you want have VPN access for individual applications (e.g. Firefox but not Chrome) without routing all your internet traffic through it, then this setup will work with any applications that can use a HTTP or a SOCKS5 proxy server.
 
+## What's New
+
+**HTTP and SOCKS5 proxy ports can now be accessed over IP address on your network.**
+
+Previously, the http and socks5 proxy only worked when applications using them were also on the host machine. This was great if you were just using it on your local system (which I was in my case), but if you wanted to host it on server and have your network access it, then it wouldn't work due to possibly the Mullvad app security filtering out IP addresses that was outside of the docker network IP range on your host machine.
+
+To get around this problem, we serve the ports over the network via an nginx reverse proxy just like how web applications are served. A new container has been added using the docker host network which proxies the exposed ports on the mullvad container. The mullvad container ports are now exposed as ports 61000-61001 to try to avoid collisions with other applications and nginx now will proxy these ports on SOCKS5 (port 1080) and HTTP (port 8118) making them accessible to the network. 
+
 ## Requirements and Usage
 
 This setup has been tested on Ubuntu Linux and should work with all Debian-based Linux OSes. You will need the following to use this repository:

@@ -12,21 +12,32 @@ services:
     restart: unless-stopped
     privileged: true
     ports:
-      - ${HTTP_PORT:-8118}:8118
-      - ${SOCKS5_PORT:-1080}:1080
-  privoxy:
+      - 61000:1080
+      - 61001:8118
+  http:
     image: "caligari/privoxy:latest"
     container_name: mvpn-http
     restart: unless-stopped
     network_mode: service:mullvad
     depends_on:
       - mullvad
-  nginx:
-    build: nginx/.
-    image: mvpn-nginx
+  socks5:
+    build: socks5/.
+    image: mvpn-socks5
     container_name: mvpn-socks5
     restart: unless-stopped
     network_mode: service:mullvad
     depends_on:
       - mullvad
+  proxy:
+    build: proxy/.
+    image: mvpn-proxy
+    container_name: mvpn-proxy
+    restart: unless-stopped
+    network_mode: host
+    depends_on:
+      - mullvad
+    ports:
+      - ${HTTP_PORT:-8118}:8118
+      - ${SOCK5_PORT:-1080}:1080
     
