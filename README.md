@@ -41,6 +41,14 @@ cd mullvad-proxy
 
 The setup.sh script runs `docker-compose up -d` to setup Mullvad VPN and proxy docker  containers with container networking and then runs several Mullvad VPN CLI commands to setup the app with the account number and connects to the VPN. The containers are configured to auto restart and will be available whenever your machine starts as long as docker is running.
 
+The Mullvad account number can also be set in the .env file.
+```bash
+ACCOUNT_NUMBER=<Mullvad Account Number>
+HTTP_PORT=8118
+SOCKS5_PORT=1080
+```
+With this set, you can just run `./setup.sh` to get the containers up and running.
+
 To teardown the containers, use the following:
 
 ```bash

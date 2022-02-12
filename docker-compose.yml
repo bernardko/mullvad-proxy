@@ -34,7 +34,6 @@ services:
     image: mvpn-proxy
     container_name: mvpn-proxy
     restart: unless-stopped
-    network_mode: host
     depends_on:
       - mullvad
     ports:

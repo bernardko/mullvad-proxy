@@ -1,4 +1,5 @@
 #! /bin/bash
+echo "Destroying mullvad-proxy containers..."
 echo "Getting account info and wireguard key..."
 docker exec -it mvpn mullvad account get
 docker exec -it mvpn mullvad tunnel wireguard key check
