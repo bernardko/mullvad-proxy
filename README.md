@@ -19,7 +19,7 @@ To get around this problem, we serve the ports over the network via an nginx rev
 This setup has been tested on Ubuntu Linux and should work with all Debian-based Linux OSes. You will need the following to use this repository:
 - git
 - [Docker](https://docs.docker.com/engine/install/ubuntu/)
-- [Docker Compose](https://docs.docker.com/compose/install/)
+- [Docker Compose (v1.25.0+ supports --env-file option)](https://docs.docker.com/compose/install/)
 - An active [Mullvad VPN](https://mullvad.net/en/) Account Number
 
 Once you have an active account, go to the [Mullvad Manage ports and WireGuard keys page](https://mullvad.net/en/account/#/ports) and make sure you have at least 1 wireguard key available to allow the Mullvad VPN container to connect. Each account number has a total of 5 wireguard keys.
