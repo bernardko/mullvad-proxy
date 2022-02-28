@@ -1,7 +1,4 @@
 #! /bin/bash
-echo "Destroying mullvad-proxy containers..."
-echo "Getting account info and wireguard key..."
-docker exec -it mvpn mullvad account get
-docker exec -it mvpn mullvad tunnel wireguard key check
-docker-compose down
-echo "Remember to delete the above wireguard keys from the account to free them up."
+./down.sh
+echo "Destroying mullvad-proxy images..."
+docker rmi mullvad:latest mvpn-http mvpn-socks5 mvpn-proxy caligari/privoxy:latest

@@ -31,26 +31,39 @@ HTTP_PORT=8118
 SOCKS5_PORT=1080
 ```
 
-Once the above is setup, run the following to get the proxy servers up and running:
+If you have `ufw` or other firewall application enabled, you will need to allow access between containers, something like this for `ufw`:
+
+```bash
+sudo ufw insert 1 allow from 172.0.0.0/8
+```
+This inserts into first position a rule that allows all traffic from 172.0.0.0/8 ip addresses. This example is probably insecure so you should use rules that fits your network.
+
+Once the above is setup, clone the repository:
 
 ```bash
 git clone https://github.com/bernardko/mullvad-proxy.git
 cd mullvad-proxy
-./setup.sh <Mullvad Account Number>
 ```
 
-The setup.sh script runs `docker-compose up -d` to setup Mullvad VPN and proxy docker  containers with container networking and then runs several Mullvad VPN CLI commands to setup the app with the account number and connects to the VPN. The containers are configured to auto restart and will be available whenever your machine starts as long as docker is running.
-
-The Mullvad account number can also be set in the .env file.
+I recommend using a `.env` file to save you some typing. Copy the `.env.example` file and make your changes there. The Mullvad account number can also be set in the .env file like the following.
 ```bash
 ACCOUNT_NUMBER=<Mullvad Account Number>
 HTTP_PORT=8118
 SOCKS5_PORT=1080
 ```
+
 With this set, you can just run `./setup.sh` to get the containers up and running.
+```bash
+./setup.sh
+```
+The setup.sh script runs `docker-compose up -d` to setup Mullvad VPN and proxy docker  containers with container networking and then runs several Mullvad VPN CLI commands to setup the app with the account number and connects to the VPN. The containers are configured to auto restart and will be available whenever your machine starts as long as docker is running.
 
 To teardown the containers, use the following:
+```bash
+./down.sh
+```
 
+To teardown the containers and delete all images created use the following:
 ```bash
 ./destroy.sh
 ```
