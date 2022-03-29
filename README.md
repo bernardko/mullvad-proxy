@@ -22,9 +22,11 @@ This setup has been tested on Ubuntu Linux and should work with all Debian-based
 - [Docker Compose (v1.25.0+ supports --env-file option)](https://docs.docker.com/compose/install/)
 - An active [Mullvad VPN](https://mullvad.net/en/) Account Number
 
-### Ubuntu >=21.10 
+---
+**Ubuntu >=21.10**
 If using ubuntu impish 21.10 or greater, cgroup v2 is enabled by default. This causes the Mullvad VPN daemon to break when using container image 20.04. Use the branch `version/cgroupv2` to fix this issue. Also make sure to upgrade Docker Engine to `>=20.10`. Keeping this in a separate branch for now.
 
+---
 Once you have an active account, go to the [Mullvad Manage ports and WireGuard keys page](https://mullvad.net/en/account/#/ports) and make sure you have at least 1 wireguard key available to allow the Mullvad VPN container to connect. Each account number has a total of 5 wireguard keys.
 
 Make sure ports 8118 and 1080 are available. If you need to bind the proxy servers to different ports, you can create a `.env` in the same path as the docker-compose.yml file with the following to change the ports:
