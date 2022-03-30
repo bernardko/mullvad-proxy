@@ -25,7 +25,7 @@ This setup has been tested on Ubuntu Linux and should work with all Debian-based
 ---
 **Ubuntu >=21.10**
 
-If using ubuntu impish 21.10 or greater, cgroup v2 is enabled by default. This causes the Mullvad VPN daemon to break when using container image 20.04. Use the branch `version/cgroupv2` to fix this issue. Also make sure to upgrade Docker Engine to `>=20.10`. Keeping this in a separate branch for now.
+If using ubuntu impish 21.10 or greater, cgroup v2 is enabled by default. This causes the Mullvad VPN daemon to be unable to start up inside a docker container without the `docker rn --cgroupns=host` switch. Since the `cgroupns` switch has not been implemented in the docker compose spec yet, a temporary fix is implemented in `version/cgroupv2` branch. Use this branch if you are using Ubuntu 21.10 or greater for now. Also make sure to upgrade Docker Engine to `>=20.10`.
 
 ---
 Once you have an active account, go to the [Mullvad Manage ports and WireGuard keys page](https://mullvad.net/en/account/#/ports) and make sure you have at least 1 wireguard key available to allow the Mullvad VPN container to connect. Each account number has a total of 5 wireguard keys.
