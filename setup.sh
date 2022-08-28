@@ -17,9 +17,9 @@ docker build -t mullvad:latest mullvad/.
 docker run --privileged --cgroupns=host --cap-add=NET_ADMIN --cap-add=SYS_MODULE --restart unless-stopped --name mvpn -d  -p 61000:1080 -p 61001:8118 mullvad:latest
 
 if [ -f "$ENVFILE" ]; then
-    docker-compose --env-file $ENVFILE up -d
+    docker compose --env-file $ENVFILE up -d
 else 
-    docker-compose up -d
+    docker compose up -d
 fi
 
 if [ -n "$ACCOUNT" ]; then

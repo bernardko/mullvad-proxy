@@ -5,8 +5,9 @@ LABEL maintainer="Bernard Ko <bernardko@gmail.com>"
 RUN apt-get --yes update && \
     apt-get --yes install dbus curl && \
     curl -L -o mullvadvpn.deb https://mullvad.net/download/app/deb/latest && \
-    apt-get --yes install ./mullvadvpn.deb && \
-    rm -f mullvadvpn.deb && \
+    apt-get --yes install ./mullvadvpn.deb; exit 0
+
+RUN rm -f mullvadvpn.deb && \
     apt-get --yes clean && \
     rm -rf /var/lib/apt/lists/*
 
