@@ -14,9 +14,9 @@ if [ -z "$ACCOUNT" ]; then
 fi
 
 if [ -f "$ENVFILE" ]; then
-    docker-compose --env-file $ENVFILE up -d
-else 
-    docker-compose up -d
+    docker compose --env-file $ENVFILE up -d
+else
+    docker compose up -d
 fi
 
 if [ -n "$ACCOUNT" ]; then
