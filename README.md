@@ -12,7 +12,7 @@ Mullvad VPN app works well and has easy to use CLI functionality for switching b
 
 Previously, the http and socks5 proxy only worked when applications using them were also on the host machine. This was great if you were just using it on your local system (which I was in my case). However, if you wanted to host it on server and have your network access it, then it wouldn't work due to possibly the Mullvad app security filtering out IP addresses that was outside of the docker network IP range on your host machine.
 
-To get around this problem, we serve the ports over the network via an nginx reverse proxy just like how web applications are served. A new container has been added using the docker host network which proxies the exposed ports on the mullvad container. The mullvad container ports are now exposed as ports 61000-61001 to try to avoid collisions with other applications and nginx now will proxy these ports on SOCKS5 (port 1080) and HTTP (port 8118) making them accessible to the network. 
+To get around this problem, we serve the ports over the network via an nginx reverse proxy just like how web applications are served. A new container has been added using the docker host network which proxies the exposed ports on the mullvad container. The mullvad container ports are now exposed as ports 61000-61001 to try to avoid collisions with other applications and nginx now will proxy these ports on SOCKS5 (port 1080) and HTTP (port 8118) making them accessible to the network.
 
 ## Requirements and Usage
 
@@ -53,6 +53,7 @@ cd mullvad-proxy
 
 I recommend using a `.env` file to save you some typing. Copy the `.env.example` file and make your changes there. The Mullvad account number can also be set in the .env file like the following.
 ```bash
+MULLVAD_VERSION=2023.6
 ACCOUNT_NUMBER=<Mullvad Account Number>
 HTTP_PORT=8118
 SOCKS5_PORT=1080
@@ -74,7 +75,7 @@ To teardown the containers and delete all images created use the following:
 ./destroy.sh
 ```
 
-This script first runs `mullvad account get` and `mullvad tunnel wireguard key check` to output the account and wireguard key that is used in the docker container. Finally it will run `docker-compose down` to teardown the container processes. This allows you to conveniently delete the unused key from the [Manage ports and WireGuard keys page](https://mullvad.net/en/account/#/ports) (without having to guess which key it is) so that it is not locked up.
+This script first runs `mullvad account get` and `mullvad tunnel get` to output the account and Wireguard key that is used in the Docker container. Finally it will run `docker-compose down` to teardown the container processes. This allows you to conveniently delete the unused key from the [Manage ports and WireGuard keys page](https://mullvad.net/en/account/#/ports) (without having to guess which key it is) so that it is not locked up.
 
 
 ## Use Mullvad CLI
