@@ -6,4 +6,4 @@ ENVFILE=.env
 if [ -f "$ENVFILE" ]; then
     source $ENVFILE
 fi
-docker rmi "mullvad:${MULLVAD_VERSION:-latest}" mvpn-socks5 mvpn-proxy caligari/privoxy:latest vimagick/delegated:latest
+docker rmi "mullvad:${MULLVAD_VERSION:-latest}" mvpn-socks5 mvpn-proxy caligari/privoxy:latest
