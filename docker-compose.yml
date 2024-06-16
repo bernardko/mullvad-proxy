@@ -1,13 +1,11 @@
-version: "3.9"
-
 services:
-
   mullvad:
     build:
       context: mullvad/.
       args:
         - VERSION=$MULLVAD_VERSION
     image: "mullvad:${MULLVAD_VERSION:-latest}"
+    cgroup: host
     container_name: mvpn
     cap_add:
       - NET_ADMIN
