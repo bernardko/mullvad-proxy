@@ -1,5 +1,5 @@
 services:
-  mullvad:
+  mvpn:
     build:
       context: mullvad/.
       args:
@@ -7,6 +7,7 @@ services:
     image: "mullvad:${MULLVAD_VERSION:-latest}"
     cgroup: host
     container_name: mvpn
+    hostname: mvpn
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
@@ -22,18 +23,18 @@ services:
     image: "caligari/privoxy:latest"
     container_name: mvpn-http
     restart: unless-stopped
-    network_mode: service:mullvad
+    network_mode: service:mvpn
     depends_on:
-      - mullvad
+      - mvpn
 
   socks5:
     build: socks5/.
     image: mvpn-socks5
     container_name: mvpn-socks5
     restart: unless-stopped
-    network_mode: service:mullvad
+    network_mode: service:mvpn
     depends_on:
-      - mullvad
+      - mvpn
 
   proxy:
     build: proxy/.
@@ -41,7 +42,7 @@ services:
     container_name: mvpn-proxy
     restart: unless-stopped
     depends_on:
-      - mullvad
+      - mvpn
     ports:
       - ${HTTP_PORT:-8118}:8118
       - ${SOCK5_PORT:-1080}:1080
