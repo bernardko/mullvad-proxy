@@ -37,7 +37,6 @@ services:
     image: mvpn-socks5
     container_name: mvpn-socks5
     restart: unless-stopped
-    network_mode: service:mvpn
     depends_on:
       - mvpn
     networks:
