@@ -16,8 +16,8 @@ services:
     restart: unless-stopped
     privileged: true
     ports:
-      - 127.0.0.1:61000:1080
-      - 127.0.0.1:61001:8118
+      - 0.0.0.0:61000:1080
+      - 0.0.0.0.1:61001:8118
     networks:
       - mvpn_network
 
