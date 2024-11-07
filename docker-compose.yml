@@ -4,7 +4,7 @@ services:
       context: mullvad/.
       args:
         - VERSION=$MULLVAD_VERSION
-    image: "mullvad:${MULLVAD_VERSION:-latest}"
+    image: "mvpn:${MULLVAD_VERSION:-latest}"
     cgroup: host
     container_name: mvpn
     hostname: mvpn
@@ -27,24 +27,3 @@ services:
     network_mode: service:mvpn
     depends_on:
       - mvpn
-
-
-  socks5:
-    build: socks5/.
-    image: mvpn-socks5
-    container_name: mvpn-socks5
-    restart: unless-stopped
-    network_mode: service:mvpn
-    depends_on:
-      - mvpn
-
-  proxy:
-    build: proxy/.
-    image: mvpn-proxy
-    container_name: mvpn-proxy
-    restart: unless-stopped
-    depends_on:
-      - mvpn
-    ports:
-      - 0.0.0.0:${HTTP_PORT:-8118}:8118
-      - 0.0.0.0:${SOCK5_PORT:-1080}:1080
