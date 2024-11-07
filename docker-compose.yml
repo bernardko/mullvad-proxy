@@ -16,9 +16,10 @@ services:
     restart: unless-stopped
     privileged: true
     ports:
-      - 0.0.0.0:61000:1080
-      - 0.0.0.0:61001:8118
+      - 127.0.0.1:61000:1080
+      - 127.0.0.0:61001:8118
 
+# Here we are bind 8118 and 1080 in the mvpn network
   http:
     image: "caligari/privoxy:latest"
     container_name: mvpn-http
@@ -26,6 +27,7 @@ services:
     network_mode: service:mvpn
     depends_on:
       - mvpn
+
 
   socks5:
     build: socks5/.
@@ -44,5 +46,5 @@ services:
     depends_on:
       - mvpn
     ports:
-      - 0.0.0.0:${HTTP_PORT:-8118}:8118
-      - 0.0.0.0:${SOCK5_PORT:-1080}:1080
+      - 127.0.0.1:${HTTP_PORT:-8118}:8118
+      - 127.0.0.1:${SOCK5_PORT:-1080}:1080
