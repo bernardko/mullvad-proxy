@@ -18,14 +18,19 @@ services:
     ports:
       - 127.0.0.1:61000:1080
       - 127.0.0.1:61001:8118
+    networks:
+      - mvpn_network
+
 
   http:
     image: "caligari/privoxy:latest"
     container_name: mvpn-http
     restart: unless-stopped
-    network_mode: service:mvpn
     depends_on:
       - mvpn
+    networks:
+      - mvpn_network
+
 
   socks5:
     build: socks5/.
@@ -35,6 +40,9 @@ services:
     network_mode: service:mvpn
     depends_on:
       - mvpn
+    networks:
+      - mvpn_network
+
 
   proxy:
     build: proxy/.
@@ -46,3 +54,8 @@ services:
     ports:
       - 127.0.0.1:${HTTP_PORT:-8118}:8118
       - 127.0.0.1:${SOCK5_PORT:-1080}:1080
+
+
+networks:
+  mvpn_network:
+    driver: bridge
