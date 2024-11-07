@@ -16,8 +16,8 @@ services:
     restart: unless-stopped
     privileged: true
     ports:
-      - 127.0.0.1:61000:1080
-      - 127.0.0.1:61001:8118
+      - 0.0.0.0:61000:1080
+      - 0.0.0.0:61001:8118
 
   http:
     image: "caligari/privoxy:latest"
@@ -44,5 +44,5 @@ services:
     depends_on:
       - mvpn
     ports:
-      - 127.0.0.1:${HTTP_PORT:-8118}:8118
-      - 127.0.0.1:${SOCK5_PORT:-1080}:1080
+      - 0.0.0.0:${HTTP_PORT:-8118}:8118
+      - 0.0.0.0:${SOCK5_PORT:-1080}:1080
