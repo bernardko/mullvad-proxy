@@ -17,7 +17,7 @@ services:
     privileged: true
     ports:
       - 0.0.0.0:61000:1080
-      - 0.0.0.0.1:61001:8118
+      - 0.0.0.0:61001:8118
     networks:
       - mvpn_network
 
