@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   mvpn:
     build:
@@ -5,7 +7,6 @@ services:
       args:
         - VERSION=$MULLVAD_VERSION
     image: "mvpn:${MULLVAD_VERSION:-latest}"
-    cgroup: host
     container_name: mvpn
     hostname: mvpn
     cap_add:
@@ -16,14 +17,18 @@ services:
     restart: unless-stopped
     privileged: true
     ports:
-      - 127.0.0.1:61000:1080
-      - 127.0.0.1:61001:8118
+      - "127.0.0.1:61000:1080"
+      - "127.0.0.1:61001:8118"
+    networks:
+      - mvpn_network
 
-# Here we are bind 8118 and 1080 in the mvpn network
   http:
     image: "caligari/privoxy:latest"
     container_name: mvpn-http
     restart: unless-stopped
-    network_mode: service:mvpn
     depends_on:
       - mvpn
+
+networks:
+  mvpn_network:
+    driver: bridge
