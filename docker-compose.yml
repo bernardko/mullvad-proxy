@@ -17,6 +17,7 @@ services:
     privileged: true
     networks:
       - gm_backend_network
+      - api_default
 
     ports:
       - 127.0.0.1:61000:1080
@@ -34,4 +35,6 @@ services:
 
 networks:
   gm_backend_network:
+    external: true
+  api_default:
     external: true
