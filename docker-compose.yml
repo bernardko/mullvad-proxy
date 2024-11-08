@@ -18,6 +18,7 @@ services:
     networks:
       - gm_backend_network
       - api_default
+      - api_new
 
     ports:
       - 127.0.0.1:61000:1080
@@ -37,4 +38,6 @@ networks:
   gm_backend_network:
     external: true
   api_default:
+    external: true
+  api_new:
     external: true
