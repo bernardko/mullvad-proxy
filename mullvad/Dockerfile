@@ -11,7 +11,7 @@ ARG VERSION=2024.3
 # containers because it requires to be running as PID 1.
 RUN DEBIAN_FRONTEND=noninteractive; apt-get --yes update && \
     apt-get --yes install ca-certificates dbus curl dnsutils && \
-    curl -fsSL -o mullvadvpn.deb "https://mullvad.net/media/app/MullvadVPN-${VERSION}_$(dpkg --print-architecture).deb" && \
+    curl -fsSL -o mullvadvpn.deb "https://github.com/mullvad/mullvadvpn-app/releases/download/${VERSION}/MullvadVPN-${VERSION}_$(dpkg --print-architecture).deb" && \
     dpkg-deb -R mullvadvpn.deb /tmp/pkg && \
     mv /tmp/pkg/usr/bin/* /usr/local/bin/
 
