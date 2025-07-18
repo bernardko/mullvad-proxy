@@ -1,12 +1,13 @@
 services:
-  mullvad:
+  mvpn:
     build:
       context: mullvad/.
       args:
         - VERSION=$MULLVAD_VERSION
-    image: "mullvad:${MULLVAD_VERSION:-latest}"
+    image: "mvpn:${MULLVAD_VERSION:-latest}"
     cgroup: host
     container_name: mvpn
+    hostname: mvpn
     cap_add:
       - NET_ADMIN
       - SYS_MODULE
@@ -14,34 +15,29 @@ services:
       net.ipv4.conf.all.src_valid_mark: 1
     restart: unless-stopped
     privileged: true
-    ports:
-      - 61000:1080
-      - 61001:8118
+    networks:
+      - gm_backend_network
+      - api_default
+      - api_new
 
+    ports:
+      - 127.0.0.1:61000:1080
+      - 127.0.0.1:61001:8118
+
+# Here we are bind 8118 and 1080 in the mvpn network
   http:
     image: "caligari/privoxy:latest"
     container_name: mvpn-http
     restart: unless-stopped
-    network_mode: service:mullvad
+    network_mode: service:mvpn
     depends_on:
-      - mullvad
+      - mvpn
 
-  socks5:
-    build: socks5/.
-    image: mvpn-socks5
-    container_name: mvpn-socks5
-    restart: unless-stopped
-    network_mode: service:mullvad
-    depends_on:
-      - mullvad
 
-  proxy:
-    build: proxy/.
-    image: mvpn-proxy
-    container_name: mvpn-proxy
-    restart: unless-stopped
-    depends_on:
-      - mullvad
-    ports:
-      - ${HTTP_PORT:-8118}:8118
-      - ${SOCK5_PORT:-1080}:1080
+networks:
+  gm_backend_network:
+    external: true
+  api_default:
+    external: true
+  api_new:
+    external: true
